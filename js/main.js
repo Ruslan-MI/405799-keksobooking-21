@@ -65,11 +65,11 @@ const getMocksArray = function (dataObject) {
     title, price, type, rooms, guests, checkin, checkout, features, description, photos
   } = dataObject;
   for (let i = 0; i < MOCKS_QUANTITY; i++) {
-    let mock = {};
-    mock.author = {
+    mocksArray.push({});
+    mocksArray[i].author = {
       avatar: `img/avatars/user0` + (i + 1) + `.png`
     };
-    mock.offer = {
+    mocksArray[i].offer = {
       title: title[getRandomIndex(title)],
       address: `600, 350`,
       price: price[getRandomIndex(price)],
@@ -82,11 +82,10 @@ const getMocksArray = function (dataObject) {
       description: description[getRandomIndex(description)],
       photos: getRandomElements(photos)
     };
-    mock.location = {
+    mocksArray[i].location = {
       x: Math.round(Math.random() * map.offsetWidth),
       y: MIN_Y + Math.round(Math.random() * (MAX_Y - MIN_Y))
     };
-    mocksArray.push(mock);
   }
   return mocksArray;
 };
@@ -97,8 +96,8 @@ map.classList.remove(`map--faded`);
 
 const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 
-const renderPin = function (object) {
-  let newPin = pinTemplate.cloneNode(true);
+const createPin = function (object) {
+  const newPin = pinTemplate.cloneNode(true);
   newPin.style.left = object.location.x - PIN_WIDTH / 2 + `px`;
   newPin.style.top = object.location.y - PIN_HEIGHT + `px`;
   newPin.children[0].src = object.author.avatar;
@@ -106,11 +105,14 @@ const renderPin = function (object) {
   return newPin;
 };
 
+const renderPins = function (array) {
+  const fragment = document.createDocumentFragment();
+  for (let i = 0; i < array.length; i++) {
+    fragment.appendChild(createPin(array[i]));
+  }
+  return fragment;
+};
+
 const mapPins = map.querySelector(`.map__pins`);
-const fragment = document.createDocumentFragment();
 
-for (let i = 0; i < mocks.length; i++) {
-  fragment.appendChild(renderPin(mocks[i]));
-}
-
-mapPins.appendChild(fragment);
+mapPins.appendChild(renderPins(mocks));
