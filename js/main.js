@@ -184,7 +184,7 @@ const renderCards = (data, dictionary, destinationTag) => {
   for (let i = 0; i < 1; i++) {
     fragment.appendChild(createCard(data[i], dictionary));
   }
-  destinationTag.insertBefore(fragment, map.children[1]);
+  destinationTag.insertBefore(fragment, destinationTag.children[1]);
 };
 
 renderCards(mocksArray, typeCyrillic, map);
