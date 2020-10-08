@@ -117,3 +117,74 @@ const renderPins = (data, destinationTag) => {
 };
 
 renderPins(mocksArray, mapPins);
+
+const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
+const typeCyrillic = {
+  flat: `Квартира`,
+  bungalow: `Бунгало`,
+  house: `Дом`,
+  palace: `Дворец`
+};
+
+const getCurrentFeatures = (data, destinationTag) => {
+  const featureElements = destinationTag.children;
+  const dataFeatures = data.offer.features;
+  const blockElement = featureElements[0].classList[0];
+  for (let i = featureElements.length - 1; i >= 0; i--) {
+    const blockElementModifier = featureElements[i].classList[1];
+    let isCurrentMod = false;
+    for (let j = 0; j < dataFeatures.length; j++) {
+      const featureModifier = blockElement + `--` + dataFeatures[j];
+      if (featureModifier === blockElementModifier) {
+        isCurrentMod = true;
+        break;
+      }
+    }
+    if (!isCurrentMod) {
+      featureElements[i].remove();
+    }
+  }
+  return destinationTag;
+};
+
+const getCardPhotos = (data, destinationTag) => {
+  const photo = destinationTag.children[0];
+  photo.src = data.offer.photos[0];
+  const photosQuantity = data.offer.photos.length;
+  if (photosQuantity > 1) {
+    const fragment = document.createDocumentFragment();
+    for (let i = 1; i < photosQuantity; i++) {
+      const newPhoto = photo.cloneNode(true);
+      newPhoto.src = data.offer.photos[i];
+      fragment.appendChild(newPhoto);
+    }
+    destinationTag.appendChild(fragment);
+  }
+  return destinationTag;
+};
+
+const createCard = (data, dictionary) => {
+  const newCard = cardTemplate.cloneNode(true);
+  newCard.querySelector(`.popup__title`).textContent = data.offer.title;
+  newCard.querySelector(`.popup__text--address`).textContent = data.offer.address;
+  newCard.querySelector(`.popup__text--price`).textContent = data.offer.price + `₽/ночь`;
+  newCard.querySelector(`.popup__type`).textContent = dictionary[data.offer.type];
+  newCard.querySelector(`.popup__text--capacity`).textContent = data.offer.rooms + ` комнаты для ` + data.offer.guests + ` гостей`;
+  newCard.querySelector(`.popup__text--time`).textContent = `Заезд после ` + data.offer.checkin + `, выезд до ` + data.offer.checkout;
+  getCurrentFeatures(data, newCard.querySelector(`.popup__features`));
+  newCard.querySelector(`.popup__description`).textContent = data.offer.description;
+  getCardPhotos(data, newCard.querySelector(`.popup__photos`));
+  newCard.querySelector(`.popup__avatar`).src = data.author.avatar;
+  return newCard;
+};
+
+const renderCards = (data, dictionary, destinationTag) => {
+  const fragment = document.createDocumentFragment();
+  // Сейчас нужно создать только первую карточку
+  for (let i = 0; i < 1; i++) {
+    fragment.appendChild(createCard(data[i], dictionary));
+  }
+  destinationTag.insertBefore(fragment, map.children[1]);
+};
+
+renderCards(mocksArray, typeCyrillic, map);
