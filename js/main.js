@@ -5,6 +5,9 @@ const MIN_Y = 130;
 const MAX_Y = 630;
 const PIN_WIDTH = 50;
 const PIN_HEIGHT = 70;
+const MAIN_PIN_WIDTH = 65;
+const MAIN_PIN_HEIGHT = 65;
+const MAIN_PIN_SPIKE_HEIGHT = 16;
 
 const map = document.querySelector(`.map`);
 
@@ -93,8 +96,6 @@ const getMocksArray = (data) => {
 
 const mocksArray = getMocksArray(mocksData);
 
-map.classList.remove(`map--faded`);
-
 const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 
 const createPin = (data) => {
@@ -117,3 +118,78 @@ const renderPins = (data, destinationTag) => {
 };
 
 renderPins(mocksArray, mapPins);
+
+const adForm = document.querySelector(`.ad-form`);
+const mapFilters = document.querySelector(`.map__filters`);
+const mapPinMain = map.querySelector(`.map__pin--main`);
+const addressInput = adForm.querySelector(`#address`);
+
+const addDisabledForChildren = (parent) => {
+  const childrenElements = parent.children;
+  for (let childrenElement of childrenElements) {
+    childrenElement.setAttribute(`disabled`, ``);
+  }
+};
+
+const removeDisabledForChildren = (parent) => {
+  const childrenElements = parent.children;
+  for (let childrenElement of childrenElements) {
+    childrenElement.removeAttribute(`disabled`);
+  }
+};
+
+const getMainPinCoordinates = () => {
+  let totalPinHeight = MAIN_PIN_HEIGHT;
+  if (!map.classList.contains(`map--faded`)) {
+    totalPinHeight = MAIN_PIN_HEIGHT + MAIN_PIN_SPIKE_HEIGHT;
+  }
+  addressInput.value = Math.round(mapPinMain.offsetLeft + MAIN_PIN_WIDTH / 2) + `, ` + Math.round(mapPinMain.offsetTop + totalPinHeight);
+};
+
+addDisabledForChildren(adForm);
+addDisabledForChildren(mapFilters);
+getMainPinCoordinates();
+
+const onMainPinClick = (evt) => {
+  if (evt.button === 0 || evt.key === `Enter`) {
+    map.classList.remove(`map--faded`);
+    adForm.classList.remove(`ad-form--disabled`);
+    removeDisabledForChildren(adForm);
+    removeDisabledForChildren(mapFilters);
+    getMainPinCoordinates();
+    getValidCapacity();
+    roomNumber.addEventListener(`change`, getValidCapacity);
+    capacity.addEventListener(`change`, getValidRoomNumber);
+  }
+};
+
+mapPinMain.addEventListener(`mousedown`, (evt) => {
+  onMainPinClick(evt);
+});
+
+mapPinMain.addEventListener(`keydown`, (evt) => {
+  onMainPinClick(evt);
+});
+
+const roomNumber = adForm.querySelector(`#room_number`);
+const capacity = adForm.querySelector(`#capacity`);
+
+const getValidCapacity = () => {
+  if (roomNumber.value === `100`) {
+    capacity.value = `0`;
+  } else if (roomNumber.value !== `100` && capacity.value === `0`) {
+    capacity.value = roomNumber.value;
+  } else if (roomNumber.value < capacity.value) {
+    capacity.value = roomNumber.value;
+  }
+};
+
+const getValidRoomNumber = () => {
+  if (capacity.value === `0`) {
+    roomNumber.value = `100`;
+  } else if (capacity.value !== `0` && roomNumber.value === `100`) {
+    roomNumber.value = capacity.value;
+  } else if (capacity.value > roomNumber.value) {
+    roomNumber.value = capacity.value;
+  }
+};
