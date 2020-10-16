@@ -117,8 +117,6 @@ const renderPins = (data, destinationTag) => {
   destinationTag.appendChild(fragment);
 };
 
-renderPins(mocksArray, mapPins);
-
 const adForm = document.querySelector(`.ad-form`);
 const mapFilters = document.querySelector(`.map__filters`);
 const mapPinMain = map.querySelector(`.map__pin--main`);
@@ -157,6 +155,7 @@ const onMainPinClick = (evt) => {
     removeDisabledForChildren(adForm);
     removeDisabledForChildren(mapFilters);
     getMainPinCoordinates();
+    renderPins(mocksArray, mapPins);
     getValidCapacity();
   }
 };
