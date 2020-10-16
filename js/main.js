@@ -158,8 +158,6 @@ const onMainPinClick = (evt) => {
     removeDisabledForChildren(mapFilters);
     getMainPinCoordinates();
     getValidCapacity();
-    roomNumber.addEventListener(`change`, getValidCapacity);
-    capacity.addEventListener(`change`, getValidRoomNumber);
   }
 };
 
@@ -193,3 +191,11 @@ const getValidRoomNumber = () => {
     roomNumber.value = capacity.value;
   }
 };
+
+roomNumber.addEventListener(`change`, () => {
+  getValidCapacity();
+});
+
+capacity.addEventListener(`change`, () => {
+  getValidRoomNumber();
+});
