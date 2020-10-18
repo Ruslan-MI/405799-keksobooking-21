@@ -33,7 +33,6 @@
   };
 
   window.pin = {
-    renderPins,
-    getMainPinCoordinates
+    renderPins, getMainPinCoordinates
   };
 })();

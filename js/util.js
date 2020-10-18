@@ -31,9 +31,6 @@
   };
 
   window.util = {
-    getRandomIndex,
-    getRandomElements,
-    addDisabledForChildren,
-    removeDisabledForChildren
+    getRandomIndex, getRandomElements, addDisabledForChildren, removeDisabledForChildren
   };
 })();

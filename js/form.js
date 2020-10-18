@@ -33,8 +33,6 @@
   });
 
   window.form = {
-    adForm,
-    addressInput,
-    getValidCapacity
+    adForm, addressInput, getValidCapacity
   };
 })();
