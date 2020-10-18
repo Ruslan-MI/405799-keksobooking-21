@@ -4,15 +4,12 @@
   const {
     addDisabledForChildren, removeDisabledForChildren
   } = window.util;
-
   const {
     getMocksArray
   } = window.data;
-
   const {
     renderPins, getMainPinCoordinates
   } = window.pin;
-
   const {
     adForm, addressInput, getValidCapacity
   } = window.form;
