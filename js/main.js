@@ -43,6 +43,8 @@
       getMainPinCoordinates(map, mapPinMain, addressInput);
       load(successHandler, errorHandler);
       getValidCapacity();
+      mapPinMain.removeEventListener(`mousedown`, onMainPinClick);
+      mapPinMain.removeEventListener(`keydown`, onMainPinClick);
     }
   };
 
@@ -50,10 +52,6 @@
   addDisabledForChildren(mapFilters);
   getMainPinCoordinates(map, mapPinMain, addressInput);
 
-  mapPinMain.addEventListener(`mousedown`, (evt) => {
-    onMainPinClick(evt);
-  });
-  mapPinMain.addEventListener(`keydown`, (evt) => {
-    onMainPinClick(evt);
-  });
+  mapPinMain.addEventListener(`mousedown`, onMainPinClick);
+  mapPinMain.addEventListener(`keydown`, onMainPinClick);
 })();
