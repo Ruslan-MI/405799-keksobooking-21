@@ -5,21 +5,34 @@
     addDisabledForChildren, removeDisabledForChildren
   } = window.util;
   const {
-    getMocksArray
-  } = window.data;
-  const {
     renderPins, getMainPinCoordinates
   } = window.pin;
   const {
     adForm, addressInput, getValidCapacity
   } = window.form;
+  const {
+    load
+  } = window.backend;
 
   const map = document.querySelector(`.map`);
   const mapPins = map.querySelector(`.map__pins`);
   const mapFilters = document.querySelector(`.map__filters`);
   const mapPinMain = map.querySelector(`.map__pin--main`);
 
-  const mocksArray = getMocksArray(map);
+  const successHandler = (data) => {
+    renderPins(data, mapPins);
+  };
+  const errorHandler = (errorMessage) => {
+    const node = document.createElement(`div`);
+    node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
+    node.style.position = `absolute`;
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = `30px`;
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement(`afterbegin`, node);
+  };
 
   const onMainPinClick = (evt) => {
     if (evt.button === 0 || evt.key === `Enter`) {
@@ -28,8 +41,10 @@
       removeDisabledForChildren(adForm);
       removeDisabledForChildren(mapFilters);
       getMainPinCoordinates(map, mapPinMain, addressInput);
-      renderPins(mocksArray, mapPins);
+      load(successHandler, errorHandler);
       getValidCapacity();
+      mapPinMain.removeEventListener(`mousedown`, onMainPinClick);
+      mapPinMain.removeEventListener(`keydown`, onMainPinClick);
     }
   };
 
@@ -37,10 +52,6 @@
   addDisabledForChildren(mapFilters);
   getMainPinCoordinates(map, mapPinMain, addressInput);
 
-  mapPinMain.addEventListener(`mousedown`, (evt) => {
-    onMainPinClick(evt);
-  });
-  mapPinMain.addEventListener(`keydown`, (evt) => {
-    onMainPinClick(evt);
-  });
+  mapPinMain.addEventListener(`mousedown`, onMainPinClick);
+  mapPinMain.addEventListener(`keydown`, onMainPinClick);
 })();

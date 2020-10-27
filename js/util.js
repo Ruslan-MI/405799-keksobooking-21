@@ -9,7 +9,7 @@
     let newArray = [];
     let newArrayLength = Math.ceil(Math.random() * data.length);
     while (newArray.length !== newArrayLength) {
-      let randomValue = data[window.util.getRandomIndex(data)];
+      let randomValue = data[getRandomIndex(data)];
       let isDuplicate = newArray.includes(randomValue);
       if (!isDuplicate) {
         newArray.push(randomValue);
