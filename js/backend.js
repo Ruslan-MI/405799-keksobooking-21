@@ -1,13 +1,11 @@
 "use strict";
 
 (() => {
-  const STATUS_CODE = {
-    OK: 200
-  };
-  const TIMEOUT_IN_MS = 10000;
-
-  const load = (onLoad, onError) => {
-    const URL = `https://21.javascript.pages.academy/keksobooking/data`;
+  const xhrEvents = (method, URL, data, onLoad, onError) => {
+    const STATUS_CODE = {
+      OK: 200
+    };
+    const TIMEOUT_IN_MS = 10000;
 
     const xhr = new XMLHttpRequest();
 
@@ -29,11 +27,22 @@
 
     xhr.timeout = TIMEOUT_IN_MS;
 
-    xhr.open(`GET`, URL);
-    xhr.send();
+    xhr.open(method, URL);
+    xhr.send(data);
+  };
+
+  const load = (onLoad, onError) => {
+    const URL = `https://21.javascript.pages.academy/keksobooking/data`;
+
+    xhrEvents(`GET`, URL, undefined, onLoad, onError);
+  };
+  const save = (data, onLoad, onError) => {
+    const URL = `https://21.javascript.pages.academy/keksobooking`;
+
+    xhrEvents(`POST`, URL, data, onLoad, onError);
   };
 
   window.backend = {
-    load
+    load, save
   };
 })();

@@ -29,8 +29,14 @@
       childrenElement.removeAttribute(`disabled`);
     }
   };
+  const escEvent = (evt, action) => {
+    if (evt.key === `Escape`) {
+      evt.preventDefault();
+      action();
+    }
+  };
 
   window.util = {
-    getRandomIndex, getRandomElements, addDisabledForChildren, removeDisabledForChildren
+    getRandomIndex, getRandomElements, addDisabledForChildren, removeDisabledForChildren, escEvent
   };
 })();
