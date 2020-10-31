@@ -15,6 +15,7 @@
       capacity.value = roomNumber.value;
     }
   };
+
   const getValidRoomNumber = () => {
     if (capacity.value === `0`) {
       roomNumber.value = `100`;
@@ -28,6 +29,7 @@
   roomNumber.addEventListener(`change`, () => {
     getValidCapacity();
   });
+
   capacity.addEventListener(`change`, () => {
     getValidRoomNumber();
   });

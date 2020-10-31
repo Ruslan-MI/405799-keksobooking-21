@@ -13,6 +13,9 @@
   const {
     load
   } = window.backend;
+  const {
+    renderCards
+  } = window.card;
 
   const map = document.querySelector(`.map`);
   const mapPins = map.querySelector(`.map__pins`);
@@ -21,7 +24,9 @@
 
   const successHandler = (data) => {
     renderPins(data, mapPins);
+    renderCards(data, map);
   };
+
   const errorHandler = (errorMessage) => {
     const node = document.createElement(`div`);
     node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
