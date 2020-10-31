@@ -14,17 +14,14 @@
     load
   } = window.backend;
   const {
-    renderCards
+    map
   } = window.card;
 
-  const map = document.querySelector(`.map`);
-  const mapPins = map.querySelector(`.map__pins`);
   const mapFilters = document.querySelector(`.map__filters`);
   const mapPinMain = map.querySelector(`.map__pin--main`);
 
   const successHandler = (data) => {
-    renderPins(data, mapPins);
-    renderCards(data, map);
+    renderPins(data);
   };
 
   const errorHandler = (errorMessage) => {
@@ -45,7 +42,7 @@
       adForm.classList.remove(`ad-form--disabled`);
       removeDisabledForChildren(adForm);
       removeDisabledForChildren(mapFilters);
-      getMainPinCoordinates(map, mapPinMain, addressInput);
+      getMainPinCoordinates(mapPinMain, addressInput);
       load(successHandler, errorHandler);
       getValidCapacity();
       mapPinMain.removeEventListener(`mousedown`, onMainPinClick);
@@ -55,7 +52,7 @@
 
   addDisabledForChildren(adForm);
   addDisabledForChildren(mapFilters);
-  getMainPinCoordinates(map, mapPinMain, addressInput);
+  getMainPinCoordinates(mapPinMain, addressInput);
 
   mapPinMain.addEventListener(`mousedown`, onMainPinClick);
   mapPinMain.addEventListener(`keydown`, onMainPinClick);

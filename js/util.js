@@ -123,6 +123,7 @@
   };
 
   window.util = {
-    getRandomIndex, getRandomElements, addDisabledForChildren, removeDisabledForChildren, fillingCardElement, getCardCapacity, getCardTime, getCurrentFeatures, getCardPhotos
+    getRandomIndex, getRandomElements, addDisabledForChildren, removeDisabledForChildren, fillingCardElement, getCardCapacity,
+    getCardTime, getCurrentFeatures, getCardPhotos
   };
 })();

@@ -5,6 +5,7 @@
     fillingCardElement, getCardCapacity, getCardTime, getCurrentFeatures, getCardPhotos
   } = window.util;
 
+  const map = document.querySelector(`.map`);
   const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
   const typeCyrillic = {
     flat: `Квартира`,
@@ -25,19 +26,34 @@
     fillingCardElement(newCard.querySelector(`.popup__description`), data.offer.description);
     getCardPhotos(newCard.querySelector(`.popup__photos`), data.offer.photos);
     fillingCardElement(newCard.querySelector(`.popup__avatar`), data.author.avatar);
+
+    document.addEventListener(`keydown`, onCardEscPress);
+
     return newCard;
   };
 
-  const renderCards = (data, destinationTag) => {
-    const fragment = document.createDocumentFragment();
-    // Сейчас нужно создать только первую карточку
-    for (let i = 0; i < 1; i++) {
-      fragment.appendChild(createCard(data[i]));
+  const onCardEscPress = (evt) => {
+    if (evt.key === `Escape`) {
+      evt.preventDefault();
+      removeCard();
     }
-    destinationTag.insertBefore(fragment, destinationTag.children[1]);
+  };
+
+  const removeCard = () => {
+    map.querySelector(`.map__card`).remove();
+    document.removeEventListener(`keydown`, onCardEscPress);
+  };
+
+  const renderCard = (data) => {
+    if (map.querySelector(`.map__card`)) {
+      removeCard();
+    }
+    const fragment = document.createDocumentFragment();
+    fragment.appendChild(createCard(data));
+    map.insertBefore(fragment, map.querySelector(`.map__filters-container`));
   };
 
   window.card = {
-    renderCards
+    map, renderCard, removeCard
   };
 })();
