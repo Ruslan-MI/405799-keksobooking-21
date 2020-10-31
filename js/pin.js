@@ -17,6 +17,7 @@
     newPin.children[0].alt = data.offer.title;
     return newPin;
   };
+
   const renderPins = (data, destinationTag) => {
     const fragment = document.createDocumentFragment();
     for (let i = 0; i < data.length; i++) {
@@ -24,6 +25,7 @@
     }
     destinationTag.appendChild(fragment);
   };
+
   const getMainPinCoordinates = (map, pin, destinationInput) => {
     let totalPinHeight = MAIN_PIN_HEIGHT;
     if (!map.classList.contains(`map--faded`)) {
