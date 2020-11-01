@@ -1,10 +1,18 @@
 "use strict";
 
 (() => {
+  const {
+    getPriceForType
+  } = window.util;
+
   const adForm = document.querySelector(`.ad-form`);
   const roomNumber = adForm.querySelector(`#room_number`);
   const capacity = adForm.querySelector(`#capacity`);
   const addressInput = adForm.querySelector(`#address`);
+  const type = adForm.querySelector(`#type`);
+  const price = adForm.querySelector(`#price`);
+  const timein = adForm.querySelector(`#timein`);
+  const timeout = adForm.querySelector(`#timeout`);
 
   const getValidCapacity = () => {
     if (roomNumber.value === `100`) {
@@ -34,7 +42,38 @@
     getValidRoomNumber();
   });
 
+  const getValidPrice = () => {
+    price.placeholder = getPriceForType(type.value);
+    price.min = getPriceForType(type.value);
+  };
+
+  type.addEventListener(`change`, () => {
+    getValidPrice();
+  });
+
+  const getValidTimeout = () => {
+    timeout.value = timein.value;
+  };
+
+  const getValidTimein = () => {
+    timein.value = timeout.value;
+  };
+
+  timein.addEventListener(`change`, () => {
+    getValidTimeout();
+  });
+
+  timeout.addEventListener(`change`, () => {
+    getValidTimein();
+  });
+
+  const getStartValidation = () => {
+    getValidCapacity();
+    getValidPrice();
+    getValidTimeout();
+  };
+
   window.form = {
-    adForm, addressInput, getValidCapacity
+    adForm, addressInput, getStartValidation
   };
 })();

@@ -122,8 +122,23 @@
     cardElement.appendChild(fragment);
   };
 
+  const getPriceForType = (typeValue) => {
+    switch (typeValue) {
+      case `bungalow`:
+        return 0;
+      case `flat`:
+        return 1000;
+      case `house`:
+        return 5000;
+      case `palace`:
+        return 10000;
+      default:
+        return 1000000;
+    }
+  };
+
   window.util = {
     getRandomIndex, getRandomElements, addDisabledForChildren, removeDisabledForChildren, fillingCardElement, getCardCapacity,
-    getCardTime, getCurrentFeatures, getCardPhotos
+    getCardTime, getCurrentFeatures, getCardPhotos, getPriceForType
   };
 })();

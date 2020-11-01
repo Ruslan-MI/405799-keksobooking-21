@@ -8,7 +8,7 @@
     renderPins, getMainPinCoordinates
   } = window.pin;
   const {
-    adForm, addressInput, getValidCapacity
+    adForm, addressInput, getStartValidation
   } = window.form;
   const {
     load
@@ -44,7 +44,7 @@
       removeDisabledForChildren(mapFilters);
       getMainPinCoordinates(mapPinMain, addressInput);
       load(successHandler, errorHandler);
-      getValidCapacity();
+      getStartValidation();
       mapPinMain.removeEventListener(`mousedown`, onMainPinClick);
       mapPinMain.removeEventListener(`keydown`, onMainPinClick);
     }
