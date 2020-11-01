@@ -8,7 +8,7 @@
   const MAIN_PIN_SPIKE_HEIGHT = 16;
 
   const {
-    map, renderCard, removeCard
+    map, renderCard
   } = window.card;
 
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
@@ -23,18 +23,6 @@
 
     newPin.addEventListener(`click`, () => {
       renderCard(data);
-      const popupClose = map.querySelector(`.popup__close`);
-      popupClose.focus();
-      popupClose.addEventListener(`keydown`, (evt) => {
-        if (evt.key === `Tab`) {
-          evt.preventDefault();
-          newPin.focus();
-        }
-      });
-      popupClose.addEventListener(`click`, () => {
-        removeCard();
-        newPin.focus();
-      });
     });
 
     return newPin;

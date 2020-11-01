@@ -29,6 +29,10 @@
 
     document.addEventListener(`keydown`, onCardEscPress);
 
+    newCard.querySelector(`.popup__close`).addEventListener(`click`, () => {
+      removeCard();
+    });
+
     return newCard;
   };
 
@@ -48,12 +52,10 @@
     if (map.querySelector(`.map__card`)) {
       removeCard();
     }
-    const fragment = document.createDocumentFragment();
-    fragment.appendChild(createCard(data));
-    map.insertBefore(fragment, map.querySelector(`.map__filters-container`));
+    map.insertBefore(createCard(data), map.querySelector(`.map__filters-container`));
   };
 
   window.card = {
-    map, renderCard, removeCard
+    map, renderCard
   };
 })();

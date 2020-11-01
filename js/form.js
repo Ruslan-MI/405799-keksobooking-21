@@ -1,10 +1,6 @@
 "use strict";
 
 (() => {
-  const {
-    getPriceForType
-  } = window.util;
-
   const adForm = document.querySelector(`.ad-form`);
   const roomNumber = adForm.querySelector(`#room_number`);
   const capacity = adForm.querySelector(`#capacity`);
@@ -42,9 +38,16 @@
     getValidRoomNumber();
   });
 
+  const typePrice = {
+    bungalow: 0,
+    flat: 1000,
+    house: 5000,
+    palace: 10000
+  };
+
   const getValidPrice = () => {
-    price.placeholder = getPriceForType(type.value);
-    price.min = getPriceForType(type.value);
+    price.placeholder = typePrice[type.value];
+    price.min = typePrice[type.value];
   };
 
   type.addEventListener(`change`, () => {
