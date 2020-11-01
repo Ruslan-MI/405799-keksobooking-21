@@ -13,13 +13,19 @@
   const price = adForm.querySelector(`#price`);
   const timein = adForm.querySelector(`#timein`);
   const timeout = adForm.querySelector(`#timeout`);
+  const mapPinMain = document.querySelector(`.map__pin--main`);
 
-  const getMainPinCoordinates = (pin) => {
-    let totalPinHeight = MAIN_PIN_HEIGHT;
+  const getMainPinCoordinates = () => {
+    const halfPinWidth = MAIN_PIN_WIDTH / 2;
+    let totalPinHeight = MAIN_PIN_HEIGHT / 2;
     if (!document.querySelector(`.map`).classList.contains(`map--faded`)) {
       totalPinHeight = MAIN_PIN_HEIGHT + MAIN_PIN_SPIKE_HEIGHT;
     }
-    addressInput.value = Math.round(pin.offsetLeft + MAIN_PIN_WIDTH / 2) + `, ` + Math.round(pin.offsetTop + totalPinHeight);
+    addressInput.value = Math.floor(mapPinMain.offsetLeft + halfPinWidth) + `, ` + Math.floor(mapPinMain.offsetTop + totalPinHeight);
+    return {
+      x: halfPinWidth,
+      y: totalPinHeight
+    };
   };
 
   const getValidCapacity = () => {

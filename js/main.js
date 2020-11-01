@@ -13,6 +13,9 @@
   const {
     load
   } = window.backend;
+  const {
+    getMove
+  } = window.move;
 
   const map = document.querySelector(`.map`);
   const mapFilters = map.querySelector(`.map__filters`);
@@ -41,7 +44,7 @@
       adForm.classList.remove(`ad-form--disabled`);
       removeDisabledForChildren(adForm);
       removeDisabledForChildren(mapFilters);
-      getMainPinCoordinates(mapPinMain);
+      getMainPinCoordinates();
       load(successHandler, errorHandler);
       getStartValidation();
       mapPinMain.removeEventListener(`mousedown`, onMainPinClick);
@@ -51,7 +54,8 @@
 
   addDisabledForChildren(adForm);
   addDisabledForChildren(mapFilters);
-  getMainPinCoordinates(mapPinMain);
+  getMainPinCoordinates();
+  getMove(mapPinMain, getMainPinCoordinates);
 
   mapPinMain.addEventListener(`mousedown`, onMainPinClick);
   mapPinMain.addEventListener(`keydown`, onMainPinClick);
