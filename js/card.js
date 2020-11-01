@@ -56,6 +56,6 @@
   };
 
   window.card = {
-    map, renderCard
+    renderCard
   };
 })();

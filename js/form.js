@@ -1,6 +1,10 @@
 "use strict";
 
 (() => {
+  const {
+    MAIN_PIN_WIDTH, MAIN_PIN_HEIGHT, MAIN_PIN_SPIKE_HEIGHT
+  } = window.const;
+
   const adForm = document.querySelector(`.ad-form`);
   const roomNumber = adForm.querySelector(`#room_number`);
   const capacity = adForm.querySelector(`#capacity`);
@@ -9,6 +13,14 @@
   const price = adForm.querySelector(`#price`);
   const timein = adForm.querySelector(`#timein`);
   const timeout = adForm.querySelector(`#timeout`);
+
+  const getMainPinCoordinates = (pin) => {
+    let totalPinHeight = MAIN_PIN_HEIGHT;
+    if (!document.querySelector(`.map`).classList.contains(`map--faded`)) {
+      totalPinHeight = MAIN_PIN_HEIGHT + MAIN_PIN_SPIKE_HEIGHT;
+    }
+    addressInput.value = Math.round(pin.offsetLeft + MAIN_PIN_WIDTH / 2) + `, ` + Math.round(pin.offsetTop + totalPinHeight);
+  };
 
   const getValidCapacity = () => {
     if (roomNumber.value === `100`) {
@@ -77,6 +89,6 @@
   };
 
   window.form = {
-    adForm, addressInput, getStartValidation
+    getMainPinCoordinates, getStartValidation
   };
 })();
