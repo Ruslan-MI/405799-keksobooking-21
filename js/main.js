@@ -5,10 +5,10 @@
     addDisabledForChildren, removeDisabledForChildren
   } = window.util;
   const {
-    renderPins, getMainPinCoordinates
+    renderPins
   } = window.pin;
   const {
-    adForm, addressInput, getValidCapacity
+    getMainPinCoordinates, getStartValidation
   } = window.form;
   const {
     load, save
@@ -16,15 +16,20 @@
   const {
     addSuccessModal, addErrorModal
   } = window.modal;
+  const {
+    getMove
+  } = window.move;
 
   const map = document.querySelector(`.map`);
+  const mapFilters = map.querySelector(`.map__filters`);
   const mapPins = map.querySelector(`.map__pins`);
-  const mapFilters = document.querySelector(`.map__filters`);
   const mapPinMain = map.querySelector(`.map__pin--main`);
+  const adForm = document.querySelector(`.ad-form`);
 
   const successHandler = (data) => {
-    renderPins(data, mapPins);
+    renderPins(data);
   };
+
   const errorHandler = (errorMessage) => {
     const node = document.createElement(`div`);
     node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
@@ -43,9 +48,9 @@
       adForm.classList.remove(`ad-form--disabled`);
       removeDisabledForChildren(adForm);
       removeDisabledForChildren(mapFilters);
-      getMainPinCoordinates(map, mapPinMain, addressInput);
+      getMainPinCoordinates();
       load(successHandler, errorHandler);
-      getValidCapacity();
+      getStartValidation();
       mapPinMain.removeEventListener(`mousedown`, onMainPinClick);
       mapPinMain.removeEventListener(`keydown`, onMainPinClick);
     }
@@ -57,7 +62,7 @@
     adForm.classList.add(`ad-form--disabled`);
     addDisabledForChildren(adForm);
     addDisabledForChildren(mapFilters);
-    getMainPinCoordinates(map, mapPinMain, addressInput);
+    getMainPinCoordinates();
     const pins = mapPins.children;
     for (let i = pins.length - 1; i > 0; i--) {
       if (!pins[i].classList.contains(`map__pin--main`)) {
@@ -70,7 +75,8 @@
 
   addDisabledForChildren(adForm);
   addDisabledForChildren(mapFilters);
-  getMainPinCoordinates(map, mapPinMain, addressInput);
+  getMainPinCoordinates();
+  getMove(mapPinMain, getMainPinCoordinates);
 
   mapPinMain.addEventListener(`mousedown`, onMainPinClick);
   mapPinMain.addEventListener(`keydown`, onMainPinClick);
@@ -87,6 +93,6 @@
   adFormReset.addEventListener(`click`, (evt) => {
     evt.preventDefault();
     adForm.reset();
-    getMainPinCoordinates(map, mapPinMain, addressInput);
+    getMainPinCoordinates();
   });
 })();
