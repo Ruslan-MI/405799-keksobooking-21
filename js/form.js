@@ -2,8 +2,8 @@
 
 (() => {
   const {
-    getPriceForType
-  } = window.util;
+    MAIN_PIN_WIDTH, MAIN_PIN_HEIGHT, MAIN_PIN_SPIKE_HEIGHT
+  } = window.const;
 
   const adForm = document.querySelector(`.ad-form`);
   const roomNumber = adForm.querySelector(`#room_number`);
@@ -13,6 +13,20 @@
   const price = adForm.querySelector(`#price`);
   const timein = adForm.querySelector(`#timein`);
   const timeout = adForm.querySelector(`#timeout`);
+  const mapPinMain = document.querySelector(`.map__pin--main`);
+
+  const getMainPinCoordinates = () => {
+    const halfPinWidth = MAIN_PIN_WIDTH / 2;
+    let totalPinHeight = MAIN_PIN_HEIGHT / 2;
+    if (!document.querySelector(`.map`).classList.contains(`map--faded`)) {
+      totalPinHeight = MAIN_PIN_HEIGHT + MAIN_PIN_SPIKE_HEIGHT;
+    }
+    addressInput.value = Math.floor(mapPinMain.offsetLeft + halfPinWidth) + `, ` + Math.floor(mapPinMain.offsetTop + totalPinHeight);
+    return {
+      x: halfPinWidth,
+      y: totalPinHeight
+    };
+  };
 
   const getValidCapacity = () => {
     if (roomNumber.value === `100`) {
@@ -42,9 +56,16 @@
     getValidRoomNumber();
   });
 
+  const typePrice = {
+    bungalow: 0,
+    flat: 1000,
+    house: 5000,
+    palace: 10000
+  };
+
   const getValidPrice = () => {
-    price.placeholder = getPriceForType(type.value);
-    price.min = getPriceForType(type.value);
+    price.placeholder = typePrice[type.value];
+    price.min = typePrice[type.value];
   };
 
   type.addEventListener(`change`, () => {
@@ -74,6 +95,6 @@
   };
 
   window.form = {
-    adForm, addressInput, getStartValidation
+    getMainPinCoordinates, getStartValidation
   };
 })();

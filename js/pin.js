@@ -1,18 +1,15 @@
 "use strict";
 
 (() => {
-  const PIN_WIDTH = 50;
-  const PIN_HEIGHT = 70;
-  const MAIN_PIN_WIDTH = 65;
-  const MAIN_PIN_HEIGHT = 65;
-  const MAIN_PIN_SPIKE_HEIGHT = 16;
-
   const {
-    map, renderCard, removeCard
+    PIN_WIDTH, PIN_HEIGHT
+  } = window.const;
+  const {
+    renderCard
   } = window.card;
 
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
-  const mapPins = map.querySelector(`.map__pins`);
+  const mapPins = document.querySelector(`.map__pins`);
 
   const createPin = (data) => {
     const newPin = pinTemplate.cloneNode(true);
@@ -23,18 +20,6 @@
 
     newPin.addEventListener(`click`, () => {
       renderCard(data);
-      const popupClose = map.querySelector(`.popup__close`);
-      popupClose.focus();
-      popupClose.addEventListener(`keydown`, (evt) => {
-        if (evt.key === `Tab`) {
-          evt.preventDefault();
-          newPin.focus();
-        }
-      });
-      popupClose.addEventListener(`click`, () => {
-        removeCard();
-        newPin.focus();
-      });
     });
 
     return newPin;
@@ -48,15 +33,7 @@
     mapPins.appendChild(fragment);
   };
 
-  const getMainPinCoordinates = (pin, destinationInput) => {
-    let totalPinHeight = MAIN_PIN_HEIGHT;
-    if (!map.classList.contains(`map--faded`)) {
-      totalPinHeight = MAIN_PIN_HEIGHT + MAIN_PIN_SPIKE_HEIGHT;
-    }
-    destinationInput.value = Math.round(pin.offsetLeft + MAIN_PIN_WIDTH / 2) + `, ` + Math.round(pin.offsetTop + totalPinHeight);
-  };
-
   window.pin = {
-    renderPins, getMainPinCoordinates
+    renderPins
   };
 })();

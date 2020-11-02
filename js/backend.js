@@ -1,14 +1,11 @@
 "use strict";
 
 (() => {
-  const STATUS_CODE = {
-    OK: 200
-  };
-  const TIMEOUT_IN_MS = 10000;
+  const {
+    STATUS_CODE, TIMEOUT_IN_MS, URL_DOWNLOAD
+  } = window.const;
 
   const load = (onLoad, onError) => {
-    const URL = `https://21.javascript.pages.academy/keksobooking/data`;
-
     const xhr = new XMLHttpRequest();
 
     xhr.responseType = `json`;
@@ -31,7 +28,7 @@
 
     xhr.timeout = TIMEOUT_IN_MS;
 
-    xhr.open(`GET`, URL);
+    xhr.open(`GET`, URL_DOWNLOAD);
     xhr.send();
   };
 
