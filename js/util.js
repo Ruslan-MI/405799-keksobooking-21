@@ -33,13 +33,6 @@
     }
   };
 
-  const escEvent = (evt, action) => {
-    if (evt.key === `Escape`) {
-      evt.preventDefault();
-      action();
-    }
-  };
-
   const hideEmptyCardElement = (cardElement, data) => {
     if (Array.isArray(data)) {
       if (data.length === 0) {
@@ -130,7 +123,7 @@
   };
 
   window.util = {
-    getRandomIndex, getRandomElements, addDisabledForChildren, removeDisabledForChildren, fillingCardElement, getCardCapacity,
-    getCardTime, getCurrentFeatures, getCardPhotos, escEvent
+    getRandomIndex, getRandomElements, addDisabledForChildren, removeDisabledForChildren, fillingCardElement,
+    getCardCapacity, getCardTime, getCurrentFeatures, getCardPhotos
   };
 })();
