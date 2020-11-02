@@ -17,8 +17,11 @@
     addSuccessModal, addErrorModal
   } = window.modal;
   const {
-    getMove
+    getMove, getDefaultOffsets, setDefaultOffsets
   } = window.move;
+  const {
+    removeCard
+  } = window.card;
 
   const map = document.querySelector(`.map`);
   const mapFilters = map.querySelector(`.map__filters`);
@@ -62,12 +65,16 @@
     adForm.classList.add(`ad-form--disabled`);
     addDisabledForChildren(adForm);
     addDisabledForChildren(mapFilters);
+    setDefaultOffsets(mapPinMain);
     getMainPinCoordinates();
     const pins = mapPins.children;
     for (let i = pins.length - 1; i > 0; i--) {
       if (!pins[i].classList.contains(`map__pin--main`)) {
         pins[i].remove();
       }
+    }
+    if (map.querySelector(`.map__card`)) {
+      removeCard();
     }
     mapPinMain.addEventListener(`mousedown`, onMainPinClick);
     mapPinMain.addEventListener(`keydown`, onMainPinClick);
@@ -76,6 +83,7 @@
   addDisabledForChildren(adForm);
   addDisabledForChildren(mapFilters);
   getMainPinCoordinates();
+  getDefaultOffsets(mapPinMain);
   getMove(mapPinMain, getMainPinCoordinates);
 
   mapPinMain.addEventListener(`mousedown`, onMainPinClick);
@@ -93,6 +101,6 @@
   adFormReset.addEventListener(`click`, (evt) => {
     evt.preventDefault();
     adForm.reset();
-    getMainPinCoordinates();
+    pageSwitchOff();
   });
 })();

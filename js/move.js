@@ -5,6 +5,8 @@
     MIN_X_COORDS, MIN_Y_COORDS, MAX_Y_COORDS
   } = window.const;
 
+  let defaultOffsets;
+
   const getMove = (movingElement, getCoords) => {
     movingElement.addEventListener(`mousedown`, (evt) => {
       evt.preventDefault();
@@ -67,7 +69,19 @@
     });
   };
 
+  const getDefaultOffsets = (movingElement) => {
+    defaultOffsets = {
+      left: movingElement.offsetLeft,
+      top: movingElement.offsetTop
+    };
+  };
+
+  const setDefaultOffsets = (movingElement) => {
+    movingElement.style.left = defaultOffsets.left + `px`;
+    movingElement.style.top = defaultOffsets.top + `px`;
+  };
+
   window.move = {
-    getMove
+    getMove, getDefaultOffsets, setDefaultOffsets
   };
 })();
