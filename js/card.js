@@ -56,6 +56,6 @@
   };
 
   window.card = {
-    renderCard
+    renderCard, removeCard
   };
 })();

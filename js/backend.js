@@ -2,10 +2,10 @@
 
 (() => {
   const {
-    STATUS_CODE, TIMEOUT_IN_MS, URL_DOWNLOAD
+    STATUS_CODE, TIMEOUT_IN_MS, URL_DOWNLOAD, URL_UPLOAD
   } = window.const;
 
-  const load = (onLoad, onError) => {
+  const xhrEvents = (method, URL, data, onLoad, onError) => {
     const xhr = new XMLHttpRequest();
 
     xhr.responseType = `json`;
@@ -28,11 +28,19 @@
 
     xhr.timeout = TIMEOUT_IN_MS;
 
-    xhr.open(`GET`, URL_DOWNLOAD);
-    xhr.send();
+    xhr.open(method, URL);
+    xhr.send(data);
+  };
+
+  const load = (onLoad, onError) => {
+    xhrEvents(`GET`, URL_DOWNLOAD, undefined, onLoad, onError);
+  };
+
+  const save = (data, onLoad, onError) => {
+    xhrEvents(`POST`, URL_UPLOAD, data, onLoad, onError);
   };
 
   window.backend = {
-    load
+    load, save
   };
 })();
