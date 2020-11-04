@@ -14,6 +14,12 @@
   const timein = adForm.querySelector(`#timein`);
   const timeout = adForm.querySelector(`#timeout`);
   const mapPinMain = document.querySelector(`.map__pin--main`);
+  const typePrice = {
+    bungalow: 0,
+    flat: 1000,
+    house: 5000,
+    palace: 10000
+  };
 
   const getMainPinCoordinates = () => {
     const halfPinWidth = MAIN_PIN_WIDTH / 2;
@@ -55,13 +61,6 @@
   capacity.addEventListener(`change`, () => {
     getValidRoomNumber();
   });
-
-  const typePrice = {
-    bungalow: 0,
-    flat: 1000,
-    house: 5000,
-    palace: 10000
-  };
 
   const getValidPrice = () => {
     price.placeholder = typePrice[type.value];

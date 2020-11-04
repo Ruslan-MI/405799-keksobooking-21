@@ -5,7 +5,7 @@
     addDisabledForChildren, removeDisabledForChildren
   } = window.util;
   const {
-    renderPins
+    renderPins, removePins
   } = window.pin;
   const {
     getMainPinCoordinates, getStartValidation
@@ -25,9 +25,9 @@
 
   const map = document.querySelector(`.map`);
   const mapFilters = map.querySelector(`.map__filters`);
-  const mapPins = map.querySelector(`.map__pins`);
   const mapPinMain = map.querySelector(`.map__pin--main`);
   const adForm = document.querySelector(`.ad-form`);
+  const adFormReset = adForm.querySelector(`.ad-form__reset`);
 
   const successHandler = (data) => {
     renderPins(data);
@@ -67,12 +67,7 @@
     addDisabledForChildren(mapFilters);
     setDefaultOffsets(mapPinMain);
     getMainPinCoordinates();
-    const pins = mapPins.children;
-    for (let i = pins.length - 1; i > 0; i--) {
-      if (!pins[i].classList.contains(`map__pin--main`)) {
-        pins[i].remove();
-      }
-    }
+    removePins();
     if (map.querySelector(`.map__card`)) {
       removeCard();
     }
@@ -89,15 +84,16 @@
   mapPinMain.addEventListener(`mousedown`, onMainPinClick);
   mapPinMain.addEventListener(`keydown`, onMainPinClick);
 
-  adForm.addEventListener(`submit`, (evt) => {
+  const onSubmit = (evt) => {
     save(new FormData(adForm), () => {
       pageSwitchOff();
       addSuccessModal();
     }, addErrorModal);
     evt.preventDefault();
-  });
+  };
 
-  const adFormReset = adForm.querySelector(`.ad-form__reset`);
+  adForm.addEventListener(`submit`, onSubmit);
+
   adFormReset.addEventListener(`click`, (evt) => {
     evt.preventDefault();
     adForm.reset();
