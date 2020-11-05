@@ -44,14 +44,14 @@
   };
 
   const removeCard = () => {
-    map.querySelector(`.map__card`).remove();
-    document.removeEventListener(`keydown`, onCardEscPress);
+    if (map.querySelector(`.map__card`)) {
+      map.querySelector(`.map__card`).remove();
+      document.removeEventListener(`keydown`, onCardEscPress);
+    }
   };
 
   const renderCard = (data) => {
-    if (map.querySelector(`.map__card`)) {
-      removeCard();
-    }
+    removeCard();
     map.insertBefore(createCard(data), map.querySelector(`.map__filters-container`));
   };
 

@@ -22,6 +22,9 @@
   const {
     removeCard
   } = window.card;
+  const {
+    saveAds, getFilter
+  } = window.filter;
 
   const map = document.querySelector(`.map`);
   const mapFilters = map.querySelector(`.map__filters`);
@@ -30,7 +33,9 @@
   const adFormReset = adForm.querySelector(`.ad-form__reset`);
 
   const successHandler = (data) => {
-    renderPins(data);
+    removeDisabledForChildren(mapFilters);
+    saveAds(data);
+    renderPins(getFilter());
   };
 
   const errorHandler = (errorMessage) => {
@@ -50,7 +55,6 @@
       map.classList.remove(`map--faded`);
       adForm.classList.remove(`ad-form--disabled`);
       removeDisabledForChildren(adForm);
-      removeDisabledForChildren(mapFilters);
       getMainPinCoordinates();
       load(successHandler, errorHandler);
       getStartValidation();
@@ -68,9 +72,7 @@
     setDefaultOffsets(mapPinMain);
     getMainPinCoordinates();
     removePins();
-    if (map.querySelector(`.map__card`)) {
-      removeCard();
-    }
+    removeCard();
     mapPinMain.addEventListener(`mousedown`, onMainPinClick);
     mapPinMain.addEventListener(`keydown`, onMainPinClick);
   };
@@ -99,4 +101,12 @@
     adForm.reset();
     pageSwitchOff();
   });
+
+  const onFilterChange = () => {
+    removeCard();
+    removePins();
+    renderPins(getFilter());
+  };
+
+  mapFilters.addEventListener(`change`, onFilterChange);
 })();
