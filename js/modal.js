@@ -2,6 +2,8 @@
 
 (() => {
   const main = document.querySelector(`main`);
+  const successModalTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
+  const errorModalTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
 
   const closeModal = () => {
     document.removeEventListener(`click`, onModalClick);
@@ -22,7 +24,6 @@
   };
 
   const addSuccessModal = () => {
-    const successModalTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
     const successModal = successModalTemplate.cloneNode(true);
     successModal.classList.add(`modal`);
     main.appendChild(successModal);
@@ -31,7 +32,6 @@
   };
 
   const addErrorModal = () => {
-    const errorModalTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
     const errorModal = errorModalTemplate.cloneNode(true);
     errorModal.classList.add(`modal`);
     main.appendChild(errorModal);

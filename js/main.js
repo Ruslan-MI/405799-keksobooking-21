@@ -5,7 +5,7 @@
     addDisabledForChildren, removeDisabledForChildren
   } = window.util;
   const {
-    renderPins
+    renderPins, removePins
   } = window.pin;
   const {
     getMainPinCoordinates, getStartValidation
@@ -22,15 +22,20 @@
   const {
     removeCard
   } = window.card;
+  const {
+    saveAds, getFilter
+  } = window.filter;
 
   const map = document.querySelector(`.map`);
   const mapFilters = map.querySelector(`.map__filters`);
-  const mapPins = map.querySelector(`.map__pins`);
   const mapPinMain = map.querySelector(`.map__pin--main`);
   const adForm = document.querySelector(`.ad-form`);
+  const adFormReset = adForm.querySelector(`.ad-form__reset`);
 
   const successHandler = (data) => {
-    renderPins(data);
+    removeDisabledForChildren(mapFilters);
+    saveAds(data);
+    renderPins(getFilter());
   };
 
   const errorHandler = (errorMessage) => {
@@ -50,7 +55,6 @@
       map.classList.remove(`map--faded`);
       adForm.classList.remove(`ad-form--disabled`);
       removeDisabledForChildren(adForm);
-      removeDisabledForChildren(mapFilters);
       getMainPinCoordinates();
       load(successHandler, errorHandler);
       getStartValidation();
@@ -67,15 +71,8 @@
     addDisabledForChildren(mapFilters);
     setDefaultOffsets(mapPinMain);
     getMainPinCoordinates();
-    const pins = mapPins.children;
-    for (let i = pins.length - 1; i > 0; i--) {
-      if (!pins[i].classList.contains(`map__pin--main`)) {
-        pins[i].remove();
-      }
-    }
-    if (map.querySelector(`.map__card`)) {
-      removeCard();
-    }
+    removePins();
+    removeCard();
     mapPinMain.addEventListener(`mousedown`, onMainPinClick);
     mapPinMain.addEventListener(`keydown`, onMainPinClick);
   };
@@ -89,18 +86,27 @@
   mapPinMain.addEventListener(`mousedown`, onMainPinClick);
   mapPinMain.addEventListener(`keydown`, onMainPinClick);
 
-  adForm.addEventListener(`submit`, (evt) => {
+  const onSubmit = (evt) => {
     save(new FormData(adForm), () => {
       pageSwitchOff();
       addSuccessModal();
     }, addErrorModal);
     evt.preventDefault();
-  });
+  };
 
-  const adFormReset = adForm.querySelector(`.ad-form__reset`);
+  adForm.addEventListener(`submit`, onSubmit);
+
   adFormReset.addEventListener(`click`, (evt) => {
     evt.preventDefault();
     adForm.reset();
     pageSwitchOff();
   });
+
+  const onFilterChange = () => {
+    removeCard();
+    removePins();
+    renderPins(getFilter());
+  };
+
+  mapFilters.addEventListener(`change`, onFilterChange);
 })();

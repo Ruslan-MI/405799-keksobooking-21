@@ -98,11 +98,11 @@
     hideEmptyCardElement(cardElement, data);
     cardElement.innerHTML = ``;
     const fragment = document.createDocumentFragment();
-    for (let i = 0; i < data.length; i++) {
+    data.forEach((element) => {
       const newFeature = document.createElement(`li`);
-      newFeature.classList.add(`popup__feature`, `popup__feature--` + data[i]);
+      newFeature.classList.add(`popup__feature`, `popup__feature--` + element);
       fragment.appendChild(newFeature);
-    }
+    });
     cardElement.appendChild(fragment);
   };
 
@@ -110,15 +110,15 @@
     hideEmptyCardElement(cardElement, data);
     cardElement.innerHTML = ``;
     const fragment = document.createDocumentFragment();
-    for (let i = 0; i < data.length; i++) {
+    data.forEach((element) => {
       const newPhoto = document.createElement(`img`);
       newPhoto.classList.add(`popup__photo`);
-      newPhoto.src = data[i];
+      newPhoto.src = element;
       newPhoto.style.width = `45px`;
       newPhoto.style.height = `40px`;
       newPhoto.alt = `Фотография жилья`;
       fragment.appendChild(newPhoto);
-    }
+    });
     cardElement.appendChild(fragment);
   };
 

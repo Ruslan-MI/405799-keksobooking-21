@@ -27,13 +27,20 @@
 
   const renderPins = (data) => {
     const fragment = document.createDocumentFragment();
-    for (let i = 0; i < data.length; i++) {
-      fragment.appendChild(createPin(data[i]));
-    }
+    data.forEach((element) => {
+      fragment.appendChild(createPin(element));
+    });
     mapPins.appendChild(fragment);
   };
 
+  const removePins = () => {
+    const pins = mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+    pins.forEach((pin) => {
+      pin.remove();
+    });
+  };
+
   window.pin = {
-    renderPins
+    renderPins, removePins
   };
 })();
