@@ -25,6 +25,9 @@
   const {
     saveAds, getFilter
   } = window.filter;
+  const {
+    debounce
+  } = window.debounce;
 
   const map = document.querySelector(`.map`);
   const mapFilters = map.querySelector(`.map__filters`);
@@ -66,6 +69,7 @@
   const pageSwitchOff = () => {
     map.classList.add(`map--faded`);
     adForm.reset();
+    mapFilters.reset();
     adForm.classList.add(`ad-form--disabled`);
     addDisabledForChildren(adForm);
     addDisabledForChildren(mapFilters);
@@ -99,14 +103,15 @@
   adFormReset.addEventListener(`click`, (evt) => {
     evt.preventDefault();
     adForm.reset();
+    mapFilters.reset();
     pageSwitchOff();
   });
 
-  const onFilterChange = () => {
+  const onFilterChange = debounce(() => {
     removeCard();
     removePins();
     renderPins(getFilter());
-  };
+  });
 
   mapFilters.addEventListener(`change`, onFilterChange);
 })();
