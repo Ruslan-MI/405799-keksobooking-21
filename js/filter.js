@@ -23,6 +23,10 @@
     ads = data;
   };
 
+  const getValidityFilter = (data) => {
+    return data.offer;
+  };
+
   const getTypeFilter = (data) => {
     return housingType.value !== `any` ? housingType.value === data.offer.type : true;
   };
@@ -55,9 +59,9 @@
 
   const getFilter = () => {
     return ads.filter((ad) => {
-      return getTypeFilter(ad) && getPriceFilter(ad) && getRoomsFilter(ad) && getGuestsFilter(ad)
-      && getFeatureFilter(ad, filterWifi) && getFeatureFilter(ad, filterDishwasher) && getFeatureFilter(ad, filterParking)
-      && getFeatureFilter(ad, filterWasher) && getFeatureFilter(ad, filterElevator) && getFeatureFilter(ad, filterConditioner);
+      return getValidityFilter(ad) && getTypeFilter(ad) && getPriceFilter(ad) && getRoomsFilter(ad) && getGuestsFilter(ad)
+        && getFeatureFilter(ad, filterWifi) && getFeatureFilter(ad, filterDishwasher) && getFeatureFilter(ad, filterParking)
+        && getFeatureFilter(ad, filterWasher) && getFeatureFilter(ad, filterElevator) && getFeatureFilter(ad, filterConditioner);
     }).slice(0, MAX_PINS_QUANTITY);
   };
 

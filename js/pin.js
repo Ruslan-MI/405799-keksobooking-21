@@ -19,6 +19,10 @@
     newPin.children[0].alt = data.offer.title;
 
     newPin.addEventListener(`click`, () => {
+      if (mapPins.querySelector(`.map__pin--active`)) {
+        mapPins.querySelector(`.map__pin--active`).classList.remove(`map__pin--active`);
+      }
+      newPin.classList.add(`map__pin--active`);
       renderCard(data);
     });
 
