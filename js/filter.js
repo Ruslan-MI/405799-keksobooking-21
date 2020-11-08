@@ -10,12 +10,6 @@
   const housingPrice = mapFilters.querySelector(`#housing-price`);
   const housingRooms = mapFilters.querySelector(`#housing-rooms`);
   const housingGuests = mapFilters.querySelector(`#housing-guests`);
-  const filterWifi = mapFilters.querySelector(`#filter-wifi`);
-  const filterDishwasher = mapFilters.querySelector(`#filter-dishwasher`);
-  const filterParking = mapFilters.querySelector(`#filter-parking`);
-  const filterWasher = mapFilters.querySelector(`#filter-washer`);
-  const filterElevator = mapFilters.querySelector(`#filter-elevator`);
-  const filterConditioner = mapFilters.querySelector(`#filter-conditioner`);
 
   let ads = [];
 
@@ -53,15 +47,17 @@
     return housingGuests.value !== `any` ? housingGuests.value === data.offer.guests.toString() : true;
   };
 
-  const getFeatureFilter = (data, feature) => {
-    return feature.checked ? data.offer.features.includes(feature.value) : true;
+  const getFeatureFilter = (data) => {
+    const checkedFeatureFilters = mapFilters.querySelectorAll(`.map__checkbox:checked`);
+    return [...checkedFeatureFilters].every((feature) => {
+      return data.offer.features.includes(feature.value);
+    });
   };
 
   const getFilter = () => {
     return ads.filter((ad) => {
       return getValidityFilter(ad) && getTypeFilter(ad) && getPriceFilter(ad) && getRoomsFilter(ad) && getGuestsFilter(ad)
-        && getFeatureFilter(ad, filterWifi) && getFeatureFilter(ad, filterDishwasher) && getFeatureFilter(ad, filterParking)
-        && getFeatureFilter(ad, filterWasher) && getFeatureFilter(ad, filterElevator) && getFeatureFilter(ad, filterConditioner);
+        && getFeatureFilter(ad);
     }).slice(0, MAX_PINS_QUANTITY);
   };
 
