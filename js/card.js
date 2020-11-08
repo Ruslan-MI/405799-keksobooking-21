@@ -31,6 +31,7 @@
 
     newCard.querySelector(`.popup__close`).addEventListener(`click`, () => {
       removeCard();
+      map.querySelector(`.map__pin--active`).focus();
     });
 
     return newCard;
@@ -40,6 +41,7 @@
     if (evt.key === `Escape`) {
       evt.preventDefault();
       removeCard();
+      map.querySelector(`.map__pin--active`).focus();
     }
   };
 
@@ -53,6 +55,13 @@
   const renderCard = (data) => {
     removeCard();
     map.insertBefore(createCard(data), map.querySelector(`.map__filters-container`));
+    map.querySelector(`.popup__close`).focus();
+    map.querySelector(`.popup__close`).addEventListener(`keydown`, (evt) => {
+      if (evt.key === `Tab`) {
+        evt.preventDefault();
+        map.querySelector(`.map__pin--active`).focus();
+      }
+    });
   };
 
   window.card = {
