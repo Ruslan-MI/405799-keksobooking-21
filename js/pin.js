@@ -1,50 +1,48 @@
 "use strict";
 
-(() => {
-  const {
-    PIN_WIDTH, PIN_HEIGHT
-  } = window.const;
-  const {
-    renderCard
-  } = window.card;
+const {
+  PIN_WIDTH, PIN_HEIGHT
+} = window.const;
+const {
+  renderCard
+} = window.card;
 
-  const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
-  const mapPins = document.querySelector(`.map__pins`);
+const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+const mapPins = document.querySelector(`.map__pins`);
 
-  const createPin = (data) => {
-    const newPin = pinTemplate.cloneNode(true);
-    newPin.style.left = data.location.x - PIN_WIDTH / 2 + `px`;
-    newPin.style.top = data.location.y - PIN_HEIGHT + `px`;
-    newPin.children[0].src = data.author.avatar;
-    newPin.children[0].alt = data.offer.title;
+const createPin = (data) => {
+  const newPin = pinTemplate.cloneNode(true);
+  newPin.style.left = data.location.x - PIN_WIDTH / 2 + `px`;
+  newPin.style.top = data.location.y - PIN_HEIGHT + `px`;
+  newPin.children[0].src = data.author.avatar;
+  newPin.children[0].alt = data.offer.title;
 
-    newPin.addEventListener(`click`, () => {
-      if (mapPins.querySelector(`.map__pin--active`)) {
-        mapPins.querySelector(`.map__pin--active`).classList.remove(`map__pin--active`);
-      }
-      newPin.classList.add(`map__pin--active`);
-      renderCard(data);
-    });
+  newPin.addEventListener(`click`, () => {
+    if (mapPins.querySelector(`.map__pin--active`)) {
+      mapPins.querySelector(`.map__pin--active`).classList.remove(`map__pin--active`);
+    }
+    newPin.classList.add(`map__pin--active`);
+    renderCard(data);
+  });
 
-    return newPin;
-  };
+  return newPin;
+};
 
-  const renderPins = (data) => {
-    const fragment = document.createDocumentFragment();
-    data.forEach((element) => {
-      fragment.appendChild(createPin(element));
-    });
-    mapPins.appendChild(fragment);
-  };
+const renderPins = (data) => {
+  const fragment = document.createDocumentFragment();
+  data.forEach((element) => {
+    fragment.appendChild(createPin(element));
+  });
+  mapPins.appendChild(fragment);
+};
 
-  const removePins = () => {
-    const pins = mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
-    pins.forEach((pin) => {
-      pin.remove();
-    });
-  };
+const removePins = () => {
+  const pins = mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+  pins.forEach((pin) => {
+    pin.remove();
+  });
+};
 
-  window.pin = {
-    renderPins, removePins
-  };
-})();
+window.pin = {
+  renderPins, removePins
+};
