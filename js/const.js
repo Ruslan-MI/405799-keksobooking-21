@@ -1,22 +1,32 @@
 "use strict";
 
-const PIN_WIDTH = 50;
-const PIN_HEIGHT = 70;
-const MAIN_PIN_WIDTH = 65;
-const MAIN_PIN_HEIGHT = 65;
-const MAIN_PIN_SPIKE_HEIGHT = 16;
+const PinSize = {
+  WIDTH: 50,
+  HEIGHT: 70,
+};
 
-const STATUS_CODE = {
+const MainPinSize = {
+  WIDTH: 65,
+  HEIGHT: 65,
+  SPIKE_HEIGHT: 16
+};
+
+const StatusCode = {
   OK: 200
 };
 
 const TIMEOUT_IN_MS = 10000;
-const URL_DOWNLOAD = `https://21.javascript.pages.academy/keksobooking/data`;
-const URL_UPLOAD = `https://21.javascript.pages.academy/keksobooking`;
 
-const MIN_X_COORDS = 0;
-const MIN_Y_COORDS = 130;
-const MAX_Y_COORDS = 630;
+const Url = {
+  DOWNLOAD: `https://21.javascript.pages.academy/keksobooking/data`,
+  UPLOAD: `https://21.javascript.pages.academy/keksobooking`
+};
+
+const CoordsLimit = {
+  MIN_X: 0,
+  MIN_Y: 130,
+  MAX_Y: 630
+};
 
 const MAX_PINS_QUANTITY = 5;
 
@@ -25,7 +35,6 @@ const DEBOUNCE_INTERVAL = 500;
 const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
 
 window.const = {
-  PIN_WIDTH, PIN_HEIGHT, MAIN_PIN_WIDTH, MAIN_PIN_HEIGHT, MAIN_PIN_SPIKE_HEIGHT,
-  STATUS_CODE, TIMEOUT_IN_MS, URL_DOWNLOAD, URL_UPLOAD, MIN_X_COORDS,
-  MIN_Y_COORDS, MAX_Y_COORDS, MAX_PINS_QUANTITY, DEBOUNCE_INTERVAL, FILE_TYPES
+  PinSize, MainPinSize, StatusCode, TIMEOUT_IN_MS, Url,
+  CoordsLimit, MAX_PINS_QUANTITY, DEBOUNCE_INTERVAL, FILE_TYPES
 };

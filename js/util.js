@@ -2,15 +2,18 @@
 
 const getRandomIndex = (data) => {
   let index = Math.floor(Math.random() * data.length);
+
   return index;
 };
 
 const getRandomElements = (data) => {
   let newArray = [];
   let newArrayLength = Math.ceil(Math.random() * data.length);
+
   while (newArray.length !== newArrayLength) {
     let randomValue = data[getRandomIndex(data)];
     let isDuplicate = newArray.includes(randomValue);
+
     if (!isDuplicate) {
       newArray.push(randomValue);
     }
@@ -20,6 +23,7 @@ const getRandomElements = (data) => {
 
 const addDisabledForChildren = (parent) => {
   const childrenElements = parent.children;
+
   for (let childrenElement of childrenElements) {
     childrenElement.setAttribute(`disabled`, ``);
   }
@@ -27,6 +31,7 @@ const addDisabledForChildren = (parent) => {
 
 const removeDisabledForChildren = (parent) => {
   const childrenElements = parent.children;
+
   for (let childrenElement of childrenElements) {
     childrenElement.removeAttribute(`disabled`);
   }
@@ -90,27 +95,33 @@ const getCardTime = (cardElement, checkin, checkout) => {
     return;
   }
   cardElement.textContent = `Заезд после ` + checkin + `, выезд до ` + checkout;
-  return;
 };
 
 const getCurrentFeatures = (cardElement, data) => {
   hideEmptyCardElement(cardElement, data);
   cardElement.innerHTML = ``;
+
   const fragment = document.createDocumentFragment();
+
   data.forEach((element) => {
     const newFeature = document.createElement(`li`);
+
     newFeature.classList.add(`popup__feature`, `popup__feature--` + element);
     fragment.appendChild(newFeature);
   });
+
   cardElement.appendChild(fragment);
 };
 
 const getCardPhotos = (cardElement, data) => {
   hideEmptyCardElement(cardElement, data);
   cardElement.innerHTML = ``;
+
   const fragment = document.createDocumentFragment();
+
   data.forEach((element) => {
     const newPhoto = document.createElement(`img`);
+
     newPhoto.classList.add(`popup__photo`);
     newPhoto.src = element;
     newPhoto.style.width = `45px`;
@@ -121,7 +132,23 @@ const getCardPhotos = (cardElement, data) => {
   cardElement.appendChild(fragment);
 };
 
+const isEnterPressed = (evt) => {
+  return evt.key === `Enter`;
+};
+
+const isEscapePressed = (evt) => {
+  return evt.key === `Escape`;
+};
+
+const isTabPressed = (evt) => {
+  return evt.key === `Tab`;
+};
+
+const isMainButtonPressed = (evt) => {
+  return evt.button === 0;
+};
 window.util = {
   getRandomIndex, getRandomElements, addDisabledForChildren, removeDisabledForChildren, fillingCardElement,
-  getCardCapacity, getCardTime, getCurrentFeatures, getCardPhotos
+  getCardCapacity, getCardTime, getCurrentFeatures, getCardPhotos, isEnterPressed,
+  isEscapePressed, isTabPressed, isMainButtonPressed
 };

@@ -16,8 +16,10 @@ const getPreview = (inputFile, container) => {
       const reader = new FileReader();
 
       const onFileLoad = () => {
-        if (container.querySelector(`img`)) {
-          container.querySelector(`img`).src = reader.result;
+        const childImg = container.querySelector(`img`);
+
+        if (childImg) {
+          childImg.src = reader.result;
         } else {
           const newImg = document.createElement(`img`);
 

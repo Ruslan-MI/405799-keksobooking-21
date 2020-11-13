@@ -27,11 +27,10 @@ const getTypeFilter = (data) => {
 const getPriceCategory = (data) => {
   if (data < 10000) {
     return `low`;
-  } else if (data > 10000 && data < 50000) {
+  } else if (data >= 10000 && data < 50000) {
     return `middle`;
-  } else {
-    return `high`;
   }
+  return `high`;
 };
 
 const getPriceFilter = (data) => {
@@ -48,6 +47,7 @@ const getGuestsFilter = (data) => {
 
 const getFeatureFilter = (data) => {
   const checkedFeatureFilters = mapFilters.querySelectorAll(`.map__checkbox:checked`);
+
   return [...checkedFeatureFilters].every((feature) => {
     return data.offer.features.includes(feature.value);
   });
