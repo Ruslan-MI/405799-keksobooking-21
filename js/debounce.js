@@ -6,6 +6,7 @@ const {
 
 const debounce = (cb) => {
   let lastTimeout = null;
+
   return (...parameters) => {
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);

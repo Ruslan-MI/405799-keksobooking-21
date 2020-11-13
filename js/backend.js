@@ -1,7 +1,7 @@
 "use strict";
 
 const {
-  STATUS_CODE, TIMEOUT_IN_MS, URL_DOWNLOAD, URL_UPLOAD
+  StatusCode, TIMEOUT_IN_MS, Url
 } = window.const;
 
 const xhrEvents = (method, URL, data, onLoad, onError) => {
@@ -10,7 +10,7 @@ const xhrEvents = (method, URL, data, onLoad, onError) => {
   xhr.responseType = `json`;
 
   xhr.addEventListener(`load`, () => {
-    if (xhr.status === STATUS_CODE.OK) {
+    if (xhr.status === StatusCode.OK) {
       onLoad(xhr.response);
     } else {
       onError(`Статус ответа: ` + xhr.status + ` ` + xhr.statusText);
@@ -32,11 +32,11 @@ const xhrEvents = (method, URL, data, onLoad, onError) => {
 };
 
 const load = (onLoad, onError) => {
-  xhrEvents(`GET`, URL_DOWNLOAD, undefined, onLoad, onError);
+  xhrEvents(`GET`, Url.DOWNLOAD, undefined, onLoad, onError);
 };
 
 const save = (data, onLoad, onError) => {
-  xhrEvents(`POST`, URL_UPLOAD, data, onLoad, onError);
+  xhrEvents(`POST`, Url.UPLOAD, data, onLoad, onError);
 };
 
 window.backend = {

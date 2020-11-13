@@ -1,7 +1,7 @@
 "use strict";
 
 const {
-  MAIN_PIN_WIDTH, MAIN_PIN_HEIGHT, MAIN_PIN_SPIKE_HEIGHT
+  MainPinSize
 } = window.const;
 
 const adForm = document.querySelector(`.ad-form`);
@@ -12,8 +12,9 @@ const type = adForm.querySelector(`#type`);
 const price = adForm.querySelector(`#price`);
 const timein = adForm.querySelector(`#timein`);
 const timeout = adForm.querySelector(`#timeout`);
-const mapPinMain = document.querySelector(`.map__pin--main`);
-const typePrice = {
+const map = document.querySelector(`.map`);
+const mapPinMain = map.querySelector(`.map__pin--main`);
+const priceTypeMap = {
   bungalow: 0,
   flat: 1000,
   house: 5000,
@@ -21,10 +22,11 @@ const typePrice = {
 };
 
 const getMainPinCoordinates = () => {
-  const halfPinWidth = MAIN_PIN_WIDTH / 2;
-  let totalPinHeight = MAIN_PIN_HEIGHT / 2;
-  if (!document.querySelector(`.map`).classList.contains(`map--faded`)) {
-    totalPinHeight = MAIN_PIN_HEIGHT + MAIN_PIN_SPIKE_HEIGHT;
+  const halfPinWidth = MainPinSize.WIDTH / 2;
+  let totalPinHeight = MainPinSize.HEIGHT / 2;
+
+  if (!map.classList.contains(`map--faded`)) {
+    totalPinHeight = MainPinSize.HEIGHT + MainPinSize.SPIKE_HEIGHT;
   }
   addressInput.value = Math.floor(mapPinMain.offsetLeft + halfPinWidth) + `, ` + Math.floor(mapPinMain.offsetTop + totalPinHeight);
   return {
@@ -62,8 +64,8 @@ capacity.addEventListener(`change`, () => {
 });
 
 const getValidPrice = () => {
-  price.placeholder = typePrice[type.value];
-  price.min = typePrice[type.value];
+  price.placeholder = priceTypeMap[type.value];
+  price.min = priceTypeMap[type.value];
 };
 
 type.addEventListener(`change`, () => {

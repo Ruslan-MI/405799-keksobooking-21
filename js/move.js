@@ -1,7 +1,7 @@
 "use strict";
 
 const {
-  MIN_X_COORDS, MIN_Y_COORDS, MAX_Y_COORDS
+  CoordsLimit
 } = window.const;
 
 let defaultOffsets;
@@ -17,6 +17,7 @@ const getMove = (movingElement, getCoords) => {
 
     const onMouseMove = (moveEvt) => {
       moveEvt.preventDefault();
+
       const shift = {
         x: startCoords.x - moveEvt.clientX,
         y: startCoords.y - moveEvt.clientY
@@ -34,10 +35,10 @@ const getMove = (movingElement, getCoords) => {
       };
 
       const currentScope = {
-        minX: MIN_X_COORDS - sizeCorrection.x,
+        minX: CoordsLimit.MIN_X - sizeCorrection.x,
         maxX: movingElement.parentElement.offsetWidth - sizeCorrection.x,
-        minY: MIN_Y_COORDS - sizeCorrection.y,
-        maxY: MAX_Y_COORDS - sizeCorrection.y
+        minY: CoordsLimit.MIN_Y - sizeCorrection.y,
+        maxY: CoordsLimit.MAX_Y - sizeCorrection.y
       };
 
       if (currentOffsets.x < currentScope.minX) {
