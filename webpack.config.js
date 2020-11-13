@@ -3,6 +3,7 @@ const path = require("path");
 module.exports = {
   entry: [
     "./js/const.js",
+    "./js/preview.js",
     "./js/util.js",
     "./js/debounce.js",
     "./js/modal.js",

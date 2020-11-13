@@ -27,12 +27,19 @@ const {
 const {
   debounce
 } = window.debounce;
+const {
+  getPreview
+} = window.preview;
 
 const map = document.querySelector(`.map`);
 const mapFilters = map.querySelector(`.map__filters`);
 const mapPinMain = map.querySelector(`.map__pin--main`);
 const adForm = document.querySelector(`.ad-form`);
 const adFormReset = adForm.querySelector(`.ad-form__reset`);
+const adFormHeaderInput = adForm.querySelector(`.ad-form-header__input`);
+const adFormHeaderPreview = adForm.querySelector(`.ad-form-header__preview`);
+const adFormInput = adForm.querySelector(`.ad-form__input`);
+const adFormPhoto = adForm.querySelector(`.ad-form__photo`);
 
 const successHandler = (data) => {
   removeDisabledForChildren(mapFilters);
@@ -113,3 +120,6 @@ const onFilterChange = debounce(() => {
 });
 
 mapFilters.addEventListener(`change`, onFilterChange);
+
+getPreview(adFormHeaderInput, adFormHeaderPreview);
+getPreview(adFormInput, adFormPhoto);
