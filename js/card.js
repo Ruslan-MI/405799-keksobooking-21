@@ -31,6 +31,13 @@ const createCard = (data) => {
     removeCard();
   });
 
+  popupClose.addEventListener(`keydown`, (evt) => {
+    if (window.util.isTabPressed(evt)) {
+      evt.preventDefault();
+      map.querySelector(`.map__pin--active`).focus();
+    }
+  });
+
   return newCard;
 };
 
@@ -43,11 +50,13 @@ const onCardEscPress = (evt) => {
 
 const removeCard = () => {
   const mapCard = map.querySelector(`.map__card`);
+  const mapPinActive = map.querySelector(`.map__pin--active`);
 
   if (mapCard) {
     mapCard.remove();
     document.removeEventListener(`keydown`, onCardEscPress);
-    map.querySelector(`.map__pin--active`).classList.remove(`map__pin--active`);
+    mapPinActive.focus();
+    mapPinActive.classList.remove(`map__pin--active`);
   }
 };
 

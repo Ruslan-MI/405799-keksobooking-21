@@ -140,6 +140,10 @@ const isEscapePressed = (evt) => {
   return evt.key === `Escape`;
 };
 
+const isTabPressed = (evt) => {
+  return evt.key === `Tab`;
+};
+
 const isMainButtonPressed = (evt) => {
   return evt.button === 0;
 };
@@ -162,6 +166,7 @@ window.util = {
   getCardPhotos,
   isEnterPressed,
   isEscapePressed,
+  isTabPressed,
   isMainButtonPressed,
   removeElement
 };
