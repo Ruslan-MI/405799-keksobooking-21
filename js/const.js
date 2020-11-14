@@ -1,5 +1,10 @@
 "use strict";
 
+const TIMEOUT_IN_MS = 10000;
+const MAX_PINS_QUANTITY = 5;
+const DEBOUNCE_INTERVAL = 500;
+const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
+
 const PinSize = {
   WIDTH: 50,
   HEIGHT: 70,
@@ -15,8 +20,6 @@ const StatusCode = {
   OK: 200
 };
 
-const TIMEOUT_IN_MS = 10000;
-
 const Url = {
   DOWNLOAD: `https://21.javascript.pages.academy/keksobooking/data`,
   UPLOAD: `https://21.javascript.pages.academy/keksobooking`
@@ -27,12 +30,6 @@ const CoordsLimit = {
   MIN_Y: 130,
   MAX_Y: 630
 };
-
-const MAX_PINS_QUANTITY = 5;
-
-const DEBOUNCE_INTERVAL = 500;
-
-const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
 
 window.const = {
   PinSize, MainPinSize, StatusCode, TIMEOUT_IN_MS, Url,
