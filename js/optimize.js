@@ -1,9 +1,5 @@
 "use strict";
 
-const {
-  DEBOUNCE_INTERVAL
-} = window.const;
-
 const debounce = (cb) => {
   let lastTimeout = null;
 
@@ -13,10 +9,10 @@ const debounce = (cb) => {
     }
     lastTimeout = window.setTimeout(() => {
       cb(...parameters);
-    }, DEBOUNCE_INTERVAL);
+    }, window.const.DEBOUNCE_INTERVAL);
   };
 };
 
-window.debounce = {
+window.optimize = {
   debounce
 };

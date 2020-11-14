@@ -32,6 +32,13 @@ const CoordsLimit = {
 };
 
 window.const = {
-  PinSize, MainPinSize, StatusCode, TIMEOUT_IN_MS, Url,
-  CoordsLimit, MAX_PINS_QUANTITY, DEBOUNCE_INTERVAL, FILE_TYPES
+  PinSize,
+  MainPinSize,
+  StatusCode,
+  TIMEOUT_IN_MS,
+  Url,
+  CoordsLimit,
+  MAX_PINS_QUANTITY,
+  DEBOUNCE_INTERVAL,
+  FILE_TYPES
 };

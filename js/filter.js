@@ -1,9 +1,5 @@
 "use strict";
 
-const {
-  MAX_PINS_QUANTITY
-} = window.const;
-
 const mapFilters = document.querySelector(`.map__filters`);
 const housingType = mapFilters.querySelector(`#housing-type`);
 const housingPrice = mapFilters.querySelector(`#housing-price`);
@@ -57,9 +53,10 @@ const getFilter = () => {
   return ads.filter((ad) => {
     return getValidityFilter(ad) && getTypeFilter(ad) && getPriceFilter(ad) && getRoomsFilter(ad) && getGuestsFilter(ad)
       && getFeatureFilter(ad);
-  }).slice(0, MAX_PINS_QUANTITY);
+  }).slice(0, window.const.MAX_PINS_QUANTITY);
 };
 
 window.filter = {
-  saveAds, getFilter
+  saveAds,
+  start: getFilter
 };
