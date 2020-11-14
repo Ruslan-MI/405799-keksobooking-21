@@ -5,7 +5,7 @@ module.exports = {
     "./js/const.js",
     "./js/preview.js",
     "./js/util.js",
-    "./js/debounce.js",
+    "./js/optimize.js",
     "./js/modal.js",
     "./js/move.js",
     "./js/backend.js",

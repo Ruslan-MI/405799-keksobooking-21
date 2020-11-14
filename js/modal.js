@@ -1,9 +1,5 @@
 "use strict";
 
-const {
-  isEscapePressed
-} = window.util;
-
 const main = document.querySelector(`main`);
 const successModalTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
 const errorModalTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
@@ -22,7 +18,7 @@ const onModalClick = (evt) => {
 };
 
 const onModalEscPress = (evt) => {
-  if (isEscapePressed(evt)) {
+  if (window.util.isEscapePressed(evt)) {
     evt.preventDefault();
     closeModal();
   }
@@ -50,5 +46,6 @@ const addErrorModal = () => {
 };
 
 window.modal = {
-  addSuccessModal, addErrorModal
+  addSuccess: addSuccessModal,
+  addError: addErrorModal
 };

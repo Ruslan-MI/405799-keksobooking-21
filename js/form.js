@@ -1,9 +1,5 @@
 "use strict";
 
-const {
-  MainPinSize
-} = window.const;
-
 const adForm = document.querySelector(`.ad-form`);
 const roomNumber = adForm.querySelector(`#room_number`);
 const capacity = adForm.querySelector(`#capacity`);
@@ -22,11 +18,11 @@ const priceTypeMap = {
 };
 
 const getMainPinCoordinates = () => {
-  const halfPinWidth = MainPinSize.WIDTH / 2;
-  let totalPinHeight = MainPinSize.HEIGHT / 2;
+  const halfPinWidth = window.const.MainPinSize.WIDTH / 2;
+  let totalPinHeight = window.const.MainPinSize.HEIGHT / 2;
 
   if (!map.classList.contains(`map--faded`)) {
-    totalPinHeight = MainPinSize.HEIGHT + MainPinSize.SPIKE_HEIGHT;
+    totalPinHeight = window.const.MainPinSize.HEIGHT + window.const.MainPinSize.SPIKE_HEIGHT;
   }
   addressInput.value = Math.floor(mapPinMain.offsetLeft + halfPinWidth) + `, ` + Math.floor(mapPinMain.offsetTop + totalPinHeight);
   return {
@@ -88,12 +84,13 @@ timeout.addEventListener(`change`, () => {
   getValidTimein();
 });
 
-const getStartValidation = () => {
+const startValidation = () => {
   getValidCapacity();
   getValidPrice();
   getValidTimeout();
 };
 
 window.form = {
-  getMainPinCoordinates, getStartValidation
+  getMainPinCoordinates,
+  startValidation
 };

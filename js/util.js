@@ -140,15 +140,28 @@ const isEscapePressed = (evt) => {
   return evt.key === `Escape`;
 };
 
-const isTabPressed = (evt) => {
-  return evt.key === `Tab`;
-};
-
 const isMainButtonPressed = (evt) => {
   return evt.button === 0;
 };
+
+const removeElement = (element) => {
+  if (element) {
+    element.remove();
+  }
+};
+
 window.util = {
-  getRandomIndex, getRandomElements, addDisabledForChildren, removeDisabledForChildren, fillingCardElement,
-  getCardCapacity, getCardTime, getCurrentFeatures, getCardPhotos, isEnterPressed,
-  isEscapePressed, isTabPressed, isMainButtonPressed
+  getRandomIndex,
+  getRandomElements,
+  addDisabledForChildren,
+  removeDisabledForChildren,
+  fillingCardElement,
+  getCardCapacity,
+  getCardTime,
+  getCurrentFeatures,
+  getCardPhotos,
+  isEnterPressed,
+  isEscapePressed,
+  isMainButtonPressed,
+  removeElement
 };

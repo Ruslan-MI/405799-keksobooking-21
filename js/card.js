@@ -1,10 +1,5 @@
 "use strict";
 
-const {
-  fillingCardElement, getCardCapacity, getCardTime, getCurrentFeatures, getCardPhotos,
-  isEscapePressed, isTabPressed
-} = window.util;
-
 const map = document.querySelector(`.map`);
 const mapFiltersContainer = map.querySelector(`.map__filters-container`);
 const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
@@ -18,41 +13,31 @@ const сyrillicTypeMap = {
 const createCard = (data) => {
   const newCard = cardTemplate.cloneNode(true);
   const popupClose = newCard.querySelector(`.popup__close`);
-  const mapPinActive = map.querySelector(`.map__pin--active`);
 
-  fillingCardElement(newCard.querySelector(`.popup__title`), data.offer.title);
-  fillingCardElement(newCard.querySelector(`.popup__text--address`), data.offer.address);
-  fillingCardElement(newCard.querySelector(`.popup__text--price`), data.offer.price);
-  fillingCardElement(newCard.querySelector(`.popup__type`), сyrillicTypeMap[data.offer.type]);
-  getCardCapacity(newCard.querySelector(`.popup__text--capacity`), data.offer.rooms, data.offer.guests);
-  getCardTime(newCard.querySelector(`.popup__text--time`), data.offer.checkin, data.offer.checkout);
-  getCurrentFeatures(newCard.querySelector(`.popup__features`), data.offer.features);
-  fillingCardElement(newCard.querySelector(`.popup__description`), data.offer.description);
-  getCardPhotos(newCard.querySelector(`.popup__photos`), data.offer.photos);
-  fillingCardElement(newCard.querySelector(`.popup__avatar`), data.author.avatar);
+  window.util.fillingCardElement(newCard.querySelector(`.popup__title`), data.offer.title);
+  window.util.fillingCardElement(newCard.querySelector(`.popup__text--address`), data.offer.address);
+  window.util.fillingCardElement(newCard.querySelector(`.popup__text--price`), data.offer.price);
+  window.util.fillingCardElement(newCard.querySelector(`.popup__type`), сyrillicTypeMap[data.offer.type]);
+  window.util.getCardCapacity(newCard.querySelector(`.popup__text--capacity`), data.offer.rooms, data.offer.guests);
+  window.util.getCardTime(newCard.querySelector(`.popup__text--time`), data.offer.checkin, data.offer.checkout);
+  window.util.getCurrentFeatures(newCard.querySelector(`.popup__features`), data.offer.features);
+  window.util.fillingCardElement(newCard.querySelector(`.popup__description`), data.offer.description);
+  window.util.getCardPhotos(newCard.querySelector(`.popup__photos`), data.offer.photos);
+  window.util.fillingCardElement(newCard.querySelector(`.popup__avatar`), data.author.avatar);
 
   document.addEventListener(`keydown`, onCardEscPress);
 
   popupClose.addEventListener(`click`, () => {
     removeCard();
-    mapPinActive.focus();
-  });
-
-  popupClose.addEventListener(`keydown`, (evt) => {
-    if (isTabPressed(evt)) {
-      evt.preventDefault();
-      mapPinActive.focus();
-    }
   });
 
   return newCard;
 };
 
 const onCardEscPress = (evt) => {
-  if (isEscapePressed(evt)) {
+  if (window.util.isEscapePressed(evt)) {
     evt.preventDefault();
     removeCard();
-    map.querySelector(`.map__pin--active`).focus();
   }
 };
 
@@ -62,6 +47,7 @@ const removeCard = () => {
   if (mapCard) {
     mapCard.remove();
     document.removeEventListener(`keydown`, onCardEscPress);
+    map.querySelector(`.map__pin--active`).classList.remove(`map__pin--active`);
   }
 };
 
@@ -72,5 +58,6 @@ const renderCard = (data) => {
 };
 
 window.card = {
-  renderCard, removeCard
+  render: renderCard,
+  remove: removeCard
 };

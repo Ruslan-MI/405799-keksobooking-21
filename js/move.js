@@ -1,9 +1,5 @@
 "use strict";
 
-const {
-  CoordsLimit
-} = window.const;
-
 let defaultOffsets;
 
 const getMove = (movingElement, getCoords) => {
@@ -35,10 +31,10 @@ const getMove = (movingElement, getCoords) => {
       };
 
       const currentScope = {
-        minX: CoordsLimit.MIN_X - sizeCorrection.x,
+        minX: window.const.CoordsLimit.MIN_X - sizeCorrection.x,
         maxX: movingElement.parentElement.offsetWidth - sizeCorrection.x,
-        minY: CoordsLimit.MIN_Y - sizeCorrection.y,
-        maxY: CoordsLimit.MAX_Y - sizeCorrection.y
+        minY: window.const.CoordsLimit.MIN_Y - sizeCorrection.y,
+        maxY: window.const.CoordsLimit.MAX_Y - sizeCorrection.y
       };
 
       if (currentOffsets.x < currentScope.minX) {
@@ -82,5 +78,7 @@ const setDefaultOffsets = (movingElement) => {
 };
 
 window.move = {
-  getMove, getDefaultOffsets, setDefaultOffsets
+  start: getMove,
+  getDefaultOffsets,
+  setDefaultOffsets
 };

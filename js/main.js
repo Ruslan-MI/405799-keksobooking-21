@@ -1,37 +1,5 @@
 "use strict";
 
-const {
-  addDisabledForChildren, removeDisabledForChildren, isEnterPressed,
-  isMainButtonPressed
-} = window.util;
-const {
-  renderPins, removePins
-} = window.pin;
-const {
-  getMainPinCoordinates, getStartValidation
-} = window.form;
-const {
-  load, save
-} = window.backend;
-const {
-  addSuccessModal, addErrorModal
-} = window.modal;
-const {
-  getMove, getDefaultOffsets, setDefaultOffsets
-} = window.move;
-const {
-  removeCard
-} = window.card;
-const {
-  saveAds, getFilter
-} = window.filter;
-const {
-  debounce
-} = window.debounce;
-const {
-  getPreview
-} = window.preview;
-
 const map = document.querySelector(`.map`);
 const mapFilters = map.querySelector(`.map__filters`);
 const mapPinMain = map.querySelector(`.map__pin--main`);
@@ -46,9 +14,9 @@ const adFormPhoto = adForm.querySelector(`.ad-form__photo`);
 const defaultHeaderImg = adFormHeaderImg.src;
 
 const onSuccess = (data) => {
-  removeDisabledForChildren(mapFilters);
-  saveAds(data);
-  renderPins(getFilter());
+  window.util.removeDisabledForChildren(mapFilters);
+  window.filter.saveAds(data);
+  window.pin.render(window.filter.start());
 };
 
 const onError = (errorMessage) => {
@@ -67,22 +35,22 @@ const onError = (errorMessage) => {
 const pageSwitchOn = () => {
   map.classList.remove(`map--faded`);
   adForm.classList.remove(`ad-form--disabled`);
-  removeDisabledForChildren(adForm);
-  getMainPinCoordinates();
-  load(onSuccess, onError);
-  getStartValidation();
+  window.util.removeDisabledForChildren(adForm);
+  window.form.getMainPinCoordinates();
+  window.backend.load(onSuccess, onError);
+  window.form.startValidation();
   mapPinMain.removeEventListener(`mousedown`, onMainPinClick);
   mapPinMain.removeEventListener(`keydown`, onMainPinKeydown);
 };
 
 const onMainPinClick = (evt) => {
-  if (isMainButtonPressed(evt)) {
+  if (window.util.isMainButtonPressed(evt)) {
     pageSwitchOn();
   }
 };
 
 const onMainPinKeydown = (evt) => {
-  if (isEnterPressed(evt)) {
+  if (window.util.isEnterPressed(evt)) {
     pageSwitchOn();
   }
 };
@@ -92,32 +60,32 @@ const pageSwitchOff = () => {
   adForm.reset();
   mapFilters.reset();
   adForm.classList.add(`ad-form--disabled`);
-  addDisabledForChildren(adForm);
-  addDisabledForChildren(mapFilters);
-  setDefaultOffsets(mapPinMain);
-  getMainPinCoordinates();
-  removePins();
-  removeCard();
+  window.util.addDisabledForChildren(adForm);
+  window.util.addDisabledForChildren(mapFilters);
+  window.move.setDefaultOffsets(mapPinMain);
+  window.form.getMainPinCoordinates();
+  window.pin.remove();
+  window.card.remove();
   adFormHeaderImg.src = defaultHeaderImg;
-  adFormPhoto.querySelector(`img`).remove();
+  window.util.removeElement(adFormPhoto.querySelector(`img`));
   mapPinMain.addEventListener(`mousedown`, onMainPinClick);
   mapPinMain.addEventListener(`keydown`, onMainPinKeydown);
 };
 
-addDisabledForChildren(adForm);
-addDisabledForChildren(mapFilters);
-getMainPinCoordinates();
-getDefaultOffsets(mapPinMain);
-getMove(mapPinMain, getMainPinCoordinates);
+window.util.addDisabledForChildren(adForm);
+window.util.addDisabledForChildren(mapFilters);
+window.form.getMainPinCoordinates();
+window.move.getDefaultOffsets(mapPinMain);
+window.move.start(mapPinMain, window.form.getMainPinCoordinates);
 
 mapPinMain.addEventListener(`mousedown`, onMainPinClick);
 mapPinMain.addEventListener(`keydown`, onMainPinKeydown);
 
 const onSubmit = (evt) => {
-  save(new FormData(adForm), () => {
+  window.backend.save(new FormData(adForm), () => {
     pageSwitchOff();
-    addSuccessModal();
-  }, addErrorModal);
+    window.modal.addSuccess();
+  }, window.modal.addError);
   evt.preventDefault();
 };
 
@@ -130,13 +98,13 @@ adFormReset.addEventListener(`click`, (evt) => {
   pageSwitchOff();
 });
 
-const onFilterChange = debounce(() => {
-  removeCard();
-  removePins();
-  renderPins(getFilter());
+const onFilterChange = window.optimize.debounce(() => {
+  window.card.remove();
+  window.pin.remove();
+  window.pin.render(window.filter.start());
 });
 
 mapFilters.addEventListener(`change`, onFilterChange);
 
-getPreview(adFormHeaderInput, adFormHeaderPreview);
-getPreview(adFormInput, adFormPhoto);
+window.preview.start(adFormHeaderInput, adFormHeaderPreview);
+window.preview.start(adFormInput, adFormPhoto);
