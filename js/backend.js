@@ -1,6 +1,6 @@
 "use strict";
 
-const xhrEvents = (method, URL, data, onLoad, onError) => {
+const getXhrEvents = (method, URL, data, onLoad, onError) => {
   const xhr = new XMLHttpRequest();
 
   xhr.responseType = `json`;
@@ -28,11 +28,11 @@ const xhrEvents = (method, URL, data, onLoad, onError) => {
 };
 
 const load = (onLoad, onError) => {
-  xhrEvents(`GET`, window.const.Url.DOWNLOAD, undefined, onLoad, onError);
+  getXhrEvents(`GET`, window.const.Url.DOWNLOAD, undefined, onLoad, onError);
 };
 
 const save = (data, onLoad, onError) => {
-  xhrEvents(`POST`, window.const.Url.UPLOAD, data, onLoad, onError);
+  getXhrEvents(`POST`, window.const.Url.UPLOAD, data, onLoad, onError);
 };
 
 window.backend = {

@@ -21,9 +21,9 @@ const getTypeFilter = (data) => {
 };
 
 const getPriceCategory = (data) => {
-  if (data < 10000) {
+  if (data < window.const.PriceThreshold.MIDDLE) {
     return `low`;
-  } else if (data >= 10000 && data < 50000) {
+  } else if (data >= window.const.PriceThreshold.MIDDLE && data < window.const.PriceThreshold.HIGH) {
     return `middle`;
   }
   return `high`;
