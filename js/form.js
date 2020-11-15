@@ -17,24 +17,25 @@ const priceTypeMap = {
   palace: 10000
 };
 
-const getMainPinCoordinates = () => {
-  const halfPinWidth = window.const.MainPinSize.WIDTH / 2;
-  let totalPinHeight = window.const.MainPinSize.HEIGHT / 2;
+const halfMainPinWidth = window.const.MainPinSize.WIDTH / 2;
+const halfMainPinHeight = window.const.MainPinSize.HEIGHT / 2;
 
+const getMainPinCoordinates = () => {
+  let mainPinHeightCorrection = halfMainPinHeight;
   if (!map.classList.contains(`map--faded`)) {
-    totalPinHeight = window.const.MainPinSize.HEIGHT + window.const.MainPinSize.SPIKE_HEIGHT;
+    mainPinHeightCorrection = window.const.MainPinSize.HEIGHT + window.const.MainPinSize.SPIKE_HEIGHT;
   }
-  addressInput.value = Math.floor(mapPinMain.offsetLeft + halfPinWidth) + `, ` + Math.floor(mapPinMain.offsetTop + totalPinHeight);
+  addressInput.value = Math.floor(mapPinMain.offsetLeft + halfMainPinWidth) + `, ` + Math.floor(mapPinMain.offsetTop + mainPinHeightCorrection);
   return {
-    x: halfPinWidth,
-    y: totalPinHeight
+    x: halfMainPinWidth,
+    y: mainPinHeightCorrection
   };
 };
 
 const getValidCapacity = () => {
-  if (roomNumber.value === `100`) {
-    capacity.value = `0`;
-  } else if (roomNumber.value !== `100` && capacity.value === `0`) {
+  if (roomNumber.value === window.const.PalaceProperty.ROOM_NUMBER) {
+    capacity.value = window.const.PalaceProperty.CAPACITY;
+  } else if (roomNumber.value !== window.const.PalaceProperty.ROOM_NUMBER && capacity.value === window.const.PalaceProperty.CAPACITY) {
     capacity.value = roomNumber.value;
   } else if (roomNumber.value < capacity.value) {
     capacity.value = roomNumber.value;
@@ -42,9 +43,9 @@ const getValidCapacity = () => {
 };
 
 const getValidRoomNumber = () => {
-  if (capacity.value === `0`) {
-    roomNumber.value = `100`;
-  } else if (capacity.value !== `0` && roomNumber.value === `100`) {
+  if (capacity.value === window.const.PalaceProperty.CAPACITY) {
+    roomNumber.value = window.const.PalaceProperty.ROOM_NUMBER;
+  } else if (capacity.value !== window.const.PalaceProperty.CAPACITY && roomNumber.value === window.const.PalaceProperty.ROOM_NUMBER) {
     roomNumber.value = capacity.value;
   } else if (capacity.value > roomNumber.value) {
     roomNumber.value = capacity.value;

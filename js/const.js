@@ -31,6 +31,16 @@ const CoordsLimit = {
   MAX_Y: 630
 };
 
+const PriceThreshold = {
+  MIDDLE: 10000,
+  HIGH: 50000
+};
+
+const PalaceProperty = {
+  ROOM_NUMBER: `100`,
+  CAPACITY: `0`
+};
+
 window.const = {
   PinSize,
   MainPinSize,
@@ -40,5 +50,7 @@ window.const = {
   CoordsLimit,
   MAX_PINS_QUANTITY,
   DEBOUNCE_INTERVAL,
-  FILE_TYPES
+  FILE_TYPES,
+  PriceThreshold,
+  PalaceProperty
 };

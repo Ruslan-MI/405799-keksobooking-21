@@ -32,7 +32,7 @@ const onError = (errorMessage) => {
   document.body.insertAdjacentElement(`afterbegin`, node);
 };
 
-const pageSwitchOn = () => {
+const getPageSwitchOn = () => {
   map.classList.remove(`map--faded`);
   adForm.classList.remove(`ad-form--disabled`);
   window.util.removeDisabledForChildren(adForm);
@@ -45,17 +45,17 @@ const pageSwitchOn = () => {
 
 const onMainPinClick = (evt) => {
   if (window.util.isMainButtonPressed(evt)) {
-    pageSwitchOn();
+    getPageSwitchOn();
   }
 };
 
 const onMainPinKeydown = (evt) => {
   if (window.util.isEnterPressed(evt)) {
-    pageSwitchOn();
+    getPageSwitchOn();
   }
 };
 
-const pageSwitchOff = () => {
+const getPageSwitchOff = () => {
   map.classList.add(`map--faded`);
   adForm.reset();
   mapFilters.reset();
@@ -83,7 +83,7 @@ mapPinMain.addEventListener(`keydown`, onMainPinKeydown);
 
 const onSubmit = (evt) => {
   window.backend.save(new FormData(adForm), () => {
-    pageSwitchOff();
+    getPageSwitchOff();
     window.modal.addSuccess();
   }, window.modal.addError);
   evt.preventDefault();
@@ -95,7 +95,7 @@ adFormReset.addEventListener(`click`, (evt) => {
   evt.preventDefault();
   adForm.reset();
   mapFilters.reset();
-  pageSwitchOff();
+  getPageSwitchOff();
 });
 
 const onFilterChange = window.optimize.debounce(() => {
